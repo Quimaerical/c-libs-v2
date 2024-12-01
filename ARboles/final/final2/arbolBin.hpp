@@ -63,7 +63,7 @@ public:
 	vector<tipo> diametro();
 	void insertar(tipo elem);
 	NodoBin<tipo>* buscar(tipo elem);
-   int altura();
+	int altura();
 	vector<tipo> hojas(); //devuelve una lista de todas las hojas del arbol//
 };
 
