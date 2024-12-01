@@ -1,0 +1,196 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "Q:\\codes\\cpp\\lib\\ARboles\\final\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\pruebaArbol_bin.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:pruebaArbol_bin.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\prueba_arbol.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:prueba_arbol.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\ArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:awa\\ArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\Arbol_bin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\pruebaArbol_bin.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\ArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\makefile||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:awa\\makefile||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:nodoArbolBin.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\.claudiaideconfig||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.claudiaideconfig||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolN.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:nodoArbolN.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Arbol_bin.hpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\Arbol_bin.hpp",
+              "RelativeDocumentMoniker": "..\\Arbol_bin.hpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\Arbol_bin.hpp",
+              "RelativeToolTip": "..\\Arbol_bin.hpp",
+              "ViewState": "AQIAACMAAAAAAAAAAAAAADEAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-06-11T03:08:44.299Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "pruebaArbol_bin.cpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\pruebaArbol_bin.cpp",
+              "RelativeDocumentMoniker": "..\\pruebaArbol_bin.cpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\pruebaArbol_bin.cpp",
+              "RelativeToolTip": "..\\pruebaArbol_bin.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-06-13T13:05:43.597Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ArbolBin.hpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\ArbolBin.hpp",
+              "RelativeDocumentMoniker": "awa\\ArbolBin.hpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\ArbolBin.hpp",
+              "RelativeToolTip": "awa\\ArbolBin.hpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIMAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-06-13T12:55:26.567Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "prueba_arbol.cpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\prueba_arbol.cpp",
+              "RelativeDocumentMoniker": "prueba_arbol.cpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\prueba_arbol.cpp",
+              "RelativeToolTip": "prueba_arbol.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-06-13T12:51:49.489Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "pruebaArbol_bin.cpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\pruebaArbol_bin.cpp",
+              "RelativeDocumentMoniker": "pruebaArbol_bin.cpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\pruebaArbol_bin.cpp*",
+              "RelativeToolTip": "pruebaArbol_bin.cpp*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAMcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-06-13T12:43:21.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "makefile",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\makefile",
+              "RelativeDocumentMoniker": "awa\\makefile",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\awa\\makefile",
+              "RelativeToolTip": "awa\\makefile",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-13T12:53:57.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ArbolBin.hpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\ArbolBin.hpp",
+              "RelativeDocumentMoniker": "ArbolBin.hpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\ArbolBin.hpp",
+              "RelativeToolTip": "ArbolBin.hpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAM8AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-19T18:41:07.924Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "nodoArbolBin.hpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolBin.hpp",
+              "RelativeDocumentMoniker": "nodoArbolBin.hpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolBin.hpp",
+              "RelativeToolTip": "nodoArbolBin.hpp",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAAAEIAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-19T18:40:50.893Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "nodoArbolN.hpp",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolN.hpp",
+              "RelativeDocumentMoniker": "nodoArbolN.hpp",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\nodoArbolN.hpp",
+              "RelativeToolTip": "nodoArbolN.hpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-05-19T18:40:53.181Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": ".claudiaideconfig",
+              "DocumentMoniker": "Q:\\codes\\cpp\\lib\\ARboles\\final\\.claudiaideconfig",
+              "RelativeDocumentMoniker": ".claudiaideconfig",
+              "ToolTip": "Q:\\codes\\cpp\\lib\\ARboles\\final\\.claudiaideconfig",
+              "RelativeToolTip": ".claudiaideconfig",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAABzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-11T04:13:12.537Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
