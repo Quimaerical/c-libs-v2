@@ -2,7 +2,7 @@
 #define grafo
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include <stack>
 #include <queue>
 #include "nodoArco.hpp"
@@ -27,16 +27,16 @@ class grafo{
 		nodoVertice<elem>* getPrimero();
 		int getNroVertices();
 		int getNroArcos();
-		list getVertices();
+		vector<elem> getVertices();
 		void insertarVertice(elem info);
 		void insertarArco(elem v, w);
 		void eliminarVertice(elem info);
 		void eliminarArco(elem v, w);
 		nodoArco<elem>* existeArco (elem v, w);
 		float getPesoArco (elem v, w);
-		list getVecinos (elem v);
-		list getSucesores (elem v);
-		list getPredecesores (elem v);
+		vector<elem> getVecinos (elem v);
+		vector<elem> getSucesores (elem v);
+		vector<elem> getPredecesores (elem v);
 		bool esCompleto();
 		bool esConexo();
 		bool esNulo();
@@ -99,20 +99,28 @@ int getNroArcos(){
 	return (nArcos);
 }
 
-list getVertices(){
+vector<elem> getVertices(){
 	nodoVertice<elem>* auxVertice = prim;
-	list<nodoVertice<elem>*> vertices;
-	while (auxVertice != 0)
-	{
+	vector<nodoVertice<elem>*> vertices;
+	while (auxVertice != 0){
 		nVertices += 1;
 		vertices.push_back(auxVertice);
 		auxVertices = auxVertices.getProx();
 	}
 }
 
+void insertarVertice (elem info){
+	nodoVertice<elem>* ptrVertice = prim;
+	if (this.esNulo()){
+		this.setPrimero(new nodoVertice<elem>(info))
+	}else{
+		while (ptrVertice->getProx()!=0) {
+			ptrVertice = ptrVertice->getProx();
+		}
+		ptrVertice->setProx(new nodoVertice<elem>(info))
+	}
+	
 
-
-
-
+}
 
 #endif

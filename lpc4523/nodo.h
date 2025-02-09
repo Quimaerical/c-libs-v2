@@ -46,12 +46,20 @@ nodo<elem> ::~nodo() {
 
 template<class elem>
 void nodo<elem> ::setProx(nodo<elem>* proximo) {
-	prox = proximo;
+	if (proximo != nullptr){
+		prox = proximo;
+	} else {
+		prox = nullptr;
+	}
 }
 
 template<class elem>
 void nodo<elem> ::setPrev(nodo* previo) {
-	prev = previo;
+	if (previo != nullptr){
+		prev = previo;
+	} else {
+		prev = nullptr;
+	}
 }
 
 template<class elem>

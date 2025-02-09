@@ -27,6 +27,7 @@ class cola{
 		cola<elem> subcola(int primer, int ultim);
 		elem frente();
 		bool esVacia();
+		void concatenar(cola<elem> b);
 };
 
 template <class elem>
@@ -164,5 +165,12 @@ template <class elem>
 bool cola<elem> :: esVacia(){
 	return (longi == 0);
 }
+
+template <class elem>
+void concatenar(cola<elem> b){
+	this->ult->setProx(b.getPrim());
+	this->ult = b.getUlt();
+}
+
 
 #endif

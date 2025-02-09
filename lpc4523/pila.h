@@ -24,6 +24,7 @@ class pila {
 		pila<elem> subpila(int primer, int ultim);
 		elem tope();
 		bool esVacia();
+		void concatenar(pila<elem> b);
 };
 
 template <class elem>
@@ -163,6 +164,12 @@ elem pila<elem> :: tope(){
 template <class elem>
 bool pila<elem> :: esVacia(){
 	return (longi == 0);
+}
+
+template <class elem>
+void concatenar(pila<elem> b){
+	this->ult->setProx(b.getPrim());
+	this->ult = b.getUlt();
 }
 
 #endif

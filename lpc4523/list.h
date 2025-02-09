@@ -25,6 +25,7 @@ public:
 	lista<elem> copia();
 	elem consultar(int pos);
 	bool esVacia();
+	void concatenar(lista<elem> b);
 	elem operator [] (int pos);
 };
 
@@ -267,6 +268,11 @@ bool lista<elem>::esVacia() {
 	return (longi == 0);
 }
 
+template <class elem>
+void concatenar(lista<elem> b){
+	this->ult->setProx(b.getPrim());
+	this->ult = b.getUlt();
+}
 
 template <class elem>
 elem lista<elem>::operator [] (int pos) {

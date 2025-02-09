@@ -15,6 +15,7 @@ int main() {
 	cout << ptr->consultar(2) << endl;
 	a.eliminar(1);
 	
+	
 	pila<pila<int>*> b;
 	b.apilar(new pila<int>);
 	pila<int>* ptrP = b.tope();
@@ -34,10 +35,6 @@ int main() {
 	ptrC->desencolar();
 	cout << ptrC->frente() << endl;
 	ptrC->desencolar();
-	
-	
-	
-	
 	
 	return(0);
 }
