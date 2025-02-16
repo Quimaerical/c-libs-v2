@@ -20,6 +20,7 @@ $(TARGET): $(OBJECTS)
 
 clean:
 	-rm -f *.o core
+	-rm RUN
 
 cleanall: clean
 	-rm -f $(TARGET)

@@ -60,12 +60,12 @@ elem cola<elem> ::longitud() {
 
 template <class elem>
 nodo<elem>* cola<elem> ::getPrim() {
-	return (prim);
+	if (prim!=nullptr) return(prim); else return(0);
 }
 
 template <class elem> 
 nodo<elem>* cola<elem> ::getUlt() {
-	return(ult);
+	if (ult!=nullptr) return(ult); else return (0);
 }
 
 template <class elem>
@@ -103,15 +103,25 @@ void cola<elem> :: desencolar(){
 	nodo<elem>* ptrNodo;
 	if (longi == 1) {
 		ptrNodo = prim;
+		prim = 0;
+		ult = 0;
 		delete ptrNodo;
 		longi--;
 	}
-	else if (longi > 1) {
+	else if (longi < 1) {
+		ptrNodo = 0;
+		if (prim != nullptr) delete prim;
+		prim = 0;
+		ult = 0;
+		longi = 0;
+	}
+	else{
 		ptrNodo = prim;
 		prim = prim->getProx();
 		ptrNodo->setProx(0);
 		prim->setPrev(0);
 		delete ptrNodo;
+		longi--;
 	}
 }
 
@@ -158,7 +168,7 @@ cola<elem> cola<elem> :: subcola(int primer, int ultim){
 
 template <class elem>
 elem cola<elem> :: frente(){
-	return(prim->getDato());
+	if (prim != nullptr) return (prim->getDato()); else return(0);
 }
 
 template <class elem>
@@ -167,9 +177,17 @@ bool cola<elem> :: esVacia(){
 }
 
 template <class elem>
-void concatenar(cola<elem> b){
-	this->ult->setProx(b.getPrim());
-	this->ult = b.getUlt();
+void cola<elem>::concatenar(cola<elem> b) {
+    if (b.esVacia()) return;
+
+    if (this->esVacia()) {
+        *this = b;  // Si la cola actual está vacía, simplemente la igualamos a b
+    } else {
+        this->ult->setProx(b.getPrim());
+        b.getPrim()->setPrev(this->ult);
+        this->ult = b.getUlt();
+    }
+    this->longi += b.longitud();
 }
 
 

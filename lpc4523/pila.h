@@ -57,12 +57,12 @@ int pila<elem>::longitud() {
 
 template<class elem>
 nodo<elem>* pila<elem>::getPrim() {
-	return(prim);
+	if (prim!=nullptr) return(prim); else return(0);
 }
 
 template<class elem>
 nodo<elem>* pila<elem>::getUlt() {
-	return(ult);
+	if (ult!=nullptr) return(ult); else return (0);
 }
 
 template<class elem>
@@ -105,6 +105,10 @@ void pila<elem> :: desapilar(){
 	}
 	else if (longi < 1) {
 		ptrNodo = 0;
+		if (ult != nullptr) delete ult;
+		ult = 0;
+		prim = 0;
+		longi = 0;
 	}
 	else {
 		prim = prim->getProx();
@@ -158,7 +162,7 @@ pila<elem> pila<elem> :: subpila(int primer, int ultim){
 
 template <class elem>
 elem pila<elem> :: tope(){
-	return (prim->getDato());
+	if (prim != nullptr) return (prim->getDato()); else return (0);
 }
 
 template <class elem>
@@ -167,9 +171,17 @@ bool pila<elem> :: esVacia(){
 }
 
 template <class elem>
-void concatenar(pila<elem> b){
-	this->ult->setProx(b.getPrim());
-	this->ult = b.getUlt();
+void pila<elem>::concatenar(pila<elem> b) {
+    if (b.esVacia()) return;
+
+    if (this->esVacia()) {
+        *this = b;
+    } else {
+        this->ult->setProx(b.getPrim());
+        b.getPrim()->setPrev(this->ult);
+        this->ult = b.getUlt();
+    }
+    this->longi += b.longitud();
 }
 
 #endif

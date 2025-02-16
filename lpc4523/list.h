@@ -59,12 +59,12 @@ int lista<elem>::longitud() {
 
 template<class elem>
 nodo<elem>* lista<elem>::getPrim() {
-	return(prim);
+	if (prim!=nullptr) return(prim); else return(0);
 }
 
 template<class elem>
 nodo<elem>* lista<elem>::getUlt() {
-	return(ult);
+	if (ult!=nullptr) return(ult); else return (0);
 }
 
 template<class elem>
@@ -90,7 +90,7 @@ void lista<elem>::insertar(elem dato, int pos) {
 
 	if (longi == 0) {
 		prim = ptrNodo;
-		ult = prim;
+		ult = ptrNodo;
 	}
 	else {
 		if (pos <= 1) {
@@ -98,8 +98,10 @@ void lista<elem>::insertar(elem dato, int pos) {
 			prim = ptrNodo;
 		}
 		else if (pos > longi) {
-			ult->setProx(ptrNodo);
-			ptrNodo->setPrev(ult);
+			if (ult!=nullptr){
+				ult->setProx(ptrNodo);
+				ptrNodo->setPrev(ult);
+			}
 			ult = ptrNodo;
 		}
 		else {
@@ -153,16 +155,16 @@ template<class elem>
 void lista<elem>::eliminar(int pos) {
 	nodo<elem>* aux1 = prim;
 	nodo<elem>* aux2 = 0;
-
+	if (prim == nullptr || pos < 1 || pos > longi) return;
 	if (longi > 0) {
 		if (longi == 1) {
-			prim->~nodo();
+			delete prim;
 			prim = 0;
 			ult = 0;
 		}
 		else if (pos <= 1) {
 			prim = prim->getProx();
-			aux1->~nodo();
+			delete aux1;
 		}
 		else {
 			aux2 = aux1->getProx();
@@ -174,7 +176,7 @@ void lista<elem>::eliminar(int pos) {
 				ult = aux1;
 			}
 			aux1->setProx(aux2->getProx());
-			aux2->~nodo();
+			delete aux2;
 			aux2 = aux1->getProx();
 			aux2->setPrev(aux1);
 		}
@@ -198,6 +200,7 @@ void lista<elem>::ordenar() {
 	nodo<elem>* aux3;
 	int l = this->longi, cont = 0, cont1 = 0;
 
+	if (this->prim == nullptr || this->ult == nullptr) return;
 	this->ult->setProx(this->prim);
 	this->prim = this->prim->getProx();
 	aux3 = this->ult->getProx();
@@ -269,9 +272,9 @@ bool lista<elem>::esVacia() {
 }
 
 template <class elem>
-void concatenar(lista<elem> b){
-	this->ult->setProx(b.getPrim());
-	this->ult = b.getUlt();
+void lista<elem>::concatenar (lista<elem> b){
+	this->ult->setProx(b.prim);
+	this->ult = b.ult;
 }
 
 template <class elem>
