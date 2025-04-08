@@ -26,8 +26,8 @@ public:
 
 template<class elem>
 nodo<elem> ::nodo() {
-	prox = 0;
-	prev = 0;
+	prox = NULL;
+	prev = NULL;
 	dato = 0;
 }
 
@@ -40,25 +40,25 @@ nodo<elem> ::nodo(nodo<elem>* proximo, nodo<elem>* previo, elem data) {
 
 template<class elem>
 nodo<elem> ::~nodo() {
-	prev = 0;
-	prox = 0;
+	prev = NULL;
+	prox = NULL;
 }
 
 template<class elem>
 void nodo<elem> ::setProx(nodo<elem>* proximo) {
-	if (proximo != nullptr){
+	if (proximo != NULL){
 		prox = proximo;
 	} else {
-		prox = nullptr;
+		prox = NULL;
 	}
 }
 
 template<class elem>
-void nodo<elem> ::setPrev(nodo* previo) {
-	if (previo != nullptr){
+void nodo<elem> ::setPrev(nodo<elem>* previo) {
+	if (previo != NULL){
 		prev = previo;
 	} else {
-		prev = nullptr;
+		prev = NULL;
 	}
 }
 
@@ -69,12 +69,12 @@ void nodo<elem> ::setDato(elem data) {
 
 template<class elem>
 nodo<elem>* nodo<elem> ::getProx() {
-	return prox;
+	if (prox!=NULL) return prox; else return NULL;
 }
 
 template<class elem>
 nodo<elem>* nodo<elem> ::getPrev() {
-	return prev;
+	if (prev!=NULL) return prev; else return NULL;
 }
 
 template<class elem>
