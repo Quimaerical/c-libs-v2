@@ -71,7 +71,8 @@ int main() {
 
     // Calcular y mostrar los azotes para cada lista
     for (int i = 1; i <= L.longitud(); ++i) {
-        int azotes = calcularAzotes(L.consultar(i));
+        lista<string>* temp = L.consultar(i);
+        int azotes = calcularAzotes(temp);
         cout << azotes << endl;
     }
 
