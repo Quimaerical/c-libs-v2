@@ -23,7 +23,7 @@ public:
 	void invertir();
 	void ordenar();
 	lista<elem> copia();
-	nodo<elem>* consultar(int pos);
+	elem consultar(int pos);
 	bool esVacia();
 	void concatenar(lista<elem> b);
 	void vaciar();
@@ -260,25 +260,25 @@ lista<elem> lista<elem>::copia() {
 }
 
 template <class elem>
-nodo<elem>* lista<elem>::consultar(int pos) {
+elem lista<elem>::consultar(int pos) {
 	nodo<elem>* ptrNodo = NULL;
 	if (prim!=NULL && ult!=NULL)
 	{
 		ptrNodo = prim;
 		if (pos <= 1) {
-			return prim;
+			return prim->getDato();
 		}
 		else if (pos >= longi) {
-			return ult;
+			return ult->getDato();
 		}
 		while (--pos > 0) {
 			ptrNodo = ptrNodo->getProx();
 		}
-		return ptrNodo
-	else{
-		return 0;
-		}
+		return ptrNodo->getDato();
+	}else{
+		return elem();
 	}
+	
 }
 
 template <class elem>
