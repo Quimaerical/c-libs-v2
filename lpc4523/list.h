@@ -90,6 +90,7 @@ void lista<elem>::insertar(elem dato, int pos) {
 				prim->setPrev(ptrNodo);
 			}
 			prim = ptrNodo;
+     if (ult == NULL) ult = prim;
 		}
 		else {
 			if (ult!=NULL){
