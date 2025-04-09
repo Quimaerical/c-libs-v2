@@ -25,18 +25,10 @@ public:
 };
 
 template<class elem>
-nodo<elem> ::nodo() {
-	prox = NULL;
-	prev = NULL;
-	dato = 0;
-}
+nodo<elem>::nodo() : prox(NULL), prev(NULL) {}
 
 template<class elem>
-nodo<elem> ::nodo(nodo<elem>* proximo, nodo<elem>* previo, elem data) {
-	prox = proximo;
-	prev = previo;
-	dato = data;
-}
+nodo<elem>::nodo(nodo<elem>* proximo, nodo<elem>* previo, elem data) : prox(proximo), prev(previo), dato(data) {}
 
 template<class elem>
 nodo<elem> ::~nodo() {

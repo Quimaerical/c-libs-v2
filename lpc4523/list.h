@@ -28,7 +28,7 @@ public:
 	elem consultar(int pos);
 	elem& consultarRef(int pos);
 	bool esVacia();
-	void concatenar(lista<elem> b);
+	void concatenar(lista<elem>& b);
 	void vaciar();
 	void leerWSeparadores(char sep);
 	elem operator () (int pos);
@@ -36,26 +36,11 @@ public:
 };
 
 template<class elem>
-lista<elem>::lista() {
-	prim = NULL;
-	ult = NULL;
-	longi = 0;
-}
+lista<elem>::lista() : prim(NULL), ult(NULL), longi(0) {}
 
 template<class elem>
 lista<elem>::~lista() {
-	nodo<elem>* act = prim;
-	nodo<elem>* sig = NULL;
-
-	while (act != NULL) {
-		sig = act->getProx();
-		delete act;
-		act = sig;
-	}
-
-	prim = NULL;
-	ult = NULL;
-	longi = 0;
+	vaciar();
 }
 
 template<class elem>
@@ -98,7 +83,22 @@ void lista<elem>::insertar(elem dato, int pos) {
 		prim = ptrNodo;
 		ult = ptrNodo;
 	}
-	else {
+	else if (longi == 1) {
+		if (pos <= 1) {
+			ptrNodo->setProx(prim);
+			if (prim != NULL) {
+				prim->setPrev(ptrNodo);
+			}
+			prim = ptrNodo;
+		}
+		else {
+			if (ult!=NULL){
+				ult->setProx(ptrNodo);
+				ptrNodo->setPrev(ult);
+			}
+			ult = ptrNodo;
+		}
+	}else{
 		if (pos <= 1) {
 			ptrNodo->setProx(prim);
 			if (prim != NULL) {
@@ -115,18 +115,22 @@ void lista<elem>::insertar(elem dato, int pos) {
 		}
 		else { // Inserción en posición intermedia (versión corregida basada en la original)
 			if (pos == longi){///////////////////////////////
-				if (ult!=NULL){
-					ult->setProx(ptrNodo);
-					ptrNodo->setPrev(ult);
+				if (longi > 1){
+					if (ult!=NULL){
+						ult->setProx(ptrNodo);
+						ptrNodo->setPrev(ult);
+					}
+					ult = ptrNodo;		
 				}
-				ult = ptrNodo;				
 			}
 			else if (pos == 0){
-				if (prim != NULL) {
-					ptrNodo->setProx(prim);
-					prim->setPrev(ptrNodo);
+				if (longi > 1){
+					if (prim != NULL) {
+						ptrNodo->setProx(prim);
+						prim->setPrev(ptrNodo);
+					}
+					prim = ptrNodo;
 				}
-				prim = ptrNodo;
 			}
 			else{
 				aux1 = prim;
@@ -297,9 +301,8 @@ elem lista<elem>::consultar(int pos) {
 		}
 		return ptrNodo->getDato();
 	}else{
-		return elem();
+		exit(EXIT_FAILURE);
 	}
-	
 }
 
 template <class elem>
@@ -319,9 +322,8 @@ elem& lista<elem>::consultarRef(int pos) {
 		}
 		return ptrNodo->getDato();
 	}else{
-		return elem();
+		exit(EXIT_FAILURE);
 	}
-	
 }
 
 template <class elem>
@@ -330,7 +332,7 @@ bool lista<elem>::esVacia() {
 }
 
 template <class elem>
-void lista<elem>::concatenar (lista<elem> b){
+void lista<elem>::concatenar (lista<elem>& b){
 	this->ult->setProx(b.prim);
 	this->ult = b.ult;
 }
@@ -350,10 +352,10 @@ void lista<elem>::vaciar(){
 //Leer con separador
 template <class elem> 
 void lista<elem>::leerWSeparadores(char sep){
-    string linea;
-    if(getline(cin, linea) && !linea.empty()){
-        string item;
-        istringstream ss(linea);
+    std::string linea;
+    if(getline(std::cin, linea) && !linea.empty()){
+        std::string item;
+        std::istringstream ss(linea);
 
         while(getline(ss, item, sep)){
             if(!item.empty()){

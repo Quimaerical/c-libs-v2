@@ -1,11 +1,8 @@
-2 
-integrador vero
-pampa mariansita
-mati yisus
-giuli vero
-maxi yisus
-integrador carita
-negro raton
-manu
-martin
-grego
+2
+6 2
+5 3
+8 4
+4 5
+7
+10
+9
