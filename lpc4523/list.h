@@ -22,7 +22,7 @@ public:
 	void insertar(elem dato, int pos);
 	void modificar(elem dato, int pos);
 	void eliminar(int pos);
-	void invertir();
+	//void invertir();
 	void ordenar();
 	lista<elem> copia();
 	elem consultar(int pos);
@@ -219,13 +219,13 @@ void lista<elem>::eliminar(int pos) {
 }
 
 
-template<class elem>
-void lista<elem>::invertir() {
-	nodo<elem>* aux;
-	aux = this->ult;
-	ult = prim;
-	prim = aux;
-}
+//template<class elem>
+//void lista<elem>::invertir() {
+//	nodo<elem>* aux;
+//	aux = this->ult;
+//	ult = prim;
+//	prim = aux;
+//}
 
 template<class elem>
 void lista<elem>::ordenar() {
