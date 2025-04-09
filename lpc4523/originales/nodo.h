@@ -21,13 +21,13 @@ public:
 	void setDato(elem data);
 	nodo<elem>* getProx();
 	nodo<elem>* getPrev();
-	elem& getDato();
+	elem getDato();
 };
 
 template<class elem>
 nodo<elem> ::nodo() {
-	prox = NULL;
-	prev = NULL;
+	prox = 0;
+	prev = 0;
 	dato = 0;
 }
 
@@ -40,26 +40,18 @@ nodo<elem> ::nodo(nodo<elem>* proximo, nodo<elem>* previo, elem data) {
 
 template<class elem>
 nodo<elem> ::~nodo() {
-	prev = NULL;
-	prox = NULL;
+	prev = 0;
+	prox = 0;
 }
 
 template<class elem>
 void nodo<elem> ::setProx(nodo<elem>* proximo) {
-	if (proximo != NULL){
-		prox = proximo;
-	} else {
-		prox = NULL;
-	}
+	prox = proximo;
 }
 
 template<class elem>
-void nodo<elem> ::setPrev(nodo<elem>* previo) {
-	if (previo != NULL){
-		prev = previo;
-	} else {
-		prev = NULL;
-	}
+void nodo<elem> ::setPrev(nodo* previo) {
+	prev = previo;
 }
 
 template<class elem>
@@ -69,16 +61,16 @@ void nodo<elem> ::setDato(elem data) {
 
 template<class elem>
 nodo<elem>* nodo<elem> ::getProx() {
-	if (prox!=NULL) return prox; else return NULL;
+	return prox;
 }
 
 template<class elem>
 nodo<elem>* nodo<elem> ::getPrev() {
-	if (prev!=NULL) return prev; else return NULL;
+	return prev;
 }
 
 template<class elem>
-elem& nodo<elem> ::getDato() {
+elem nodo<elem> ::getDato() {
 	return dato;
 }
 
