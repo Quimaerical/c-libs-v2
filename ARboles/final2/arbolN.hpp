@@ -23,14 +23,14 @@ class ArbolN{
 		void ELIMINAR_ARBOL(NodoN<tipo>* Nodo);//
 		void CONTADOR(NodoN<tipo>* Nodo, int& i);//
 		void INORDEN(NodoN<tipo>* Nodo, vector<tipo> L);//
-		void PREORDEN(NodoN<tipo>* Nodo, vector<tipo>& L);//
+		void PREORDEN(NodoN<tipo>* Nodo, vector<tipo>& L, NodoN<tipo>* aux);//
 		void POSTORDEN(NodoN<tipo>* Nodo, vector<tipo>& L);//
 		void NIVELES(NodoN<tipo>* Nodo, vector<tipo>& L, queue<NodoN<tipo>*>& cola);//
 		void BUSCAR_NIVEL(NodoN<tipo>* Nodo, vector<tipo>& L, queue<NodoN<tipo>*>& cola, int nivelInic, int nivelFin);//
 		NodoN<tipo>* BUSCAR_NODO(NodoN<tipo>* nod, tipo* elem);//
 		NodoN<tipo>* COPIAR_NODOS(NodoN<tipo>* ptrN);//
 		void INSERTAR(NodoN<tipo>* nod, tipo* elem);//
-		void INSERTAR_SUBARBOL(NodoN<tipo>* nod, ArbolN<tipo>& subArbol);//
+		void INSERTAR_SUBARBOL(NodoN<tipo>* nod, NodoN<tipo>* aux, ArbolN<tipo>& subArbol);//
 		void CAMINO_RAIZ_NODO(NodoN<tipo>* raiz, vector<tipo>& L,tipo& nodo, bool& encontrado);//
 		int ALTURA(NodoN<tipo>);//
 		void HOJAS(NodoN<tipo>* p, vector<tipo> vHojas);//
@@ -63,9 +63,6 @@ class ArbolN{
 		int altura();*/
 		vector<tipo> hojas(); //devuelve una lista de todas las hojas del arbol//
 };
-
-ArbolN<tipo> A = ArbolN(1);
-A.peso();
 
 template <class tipo>
 ArbolN<tipo> :: ArbolN(){
@@ -183,6 +180,7 @@ void ArbolN<tipo> :: PREORDEN(NodoN<tipo>* Nodo, vector<tipo>& L, NodoN<tipo>* a
 template <class tipo>
 vector<tipo> ArbolN<tipo> :: preOrden(){
 	vector<tipo> L;
+	NodoN<tipo>* aux;
 	PREORDEN(this->raiz, L, aux);
 	return L;
 }
