@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "xutility": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "queue": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "stack": "cpp",
+        "vector": "cpp",
+        "xlocinfo": "cpp",
+        "xstring": "cpp",
+        "string": "cpp"
+    }
+}
