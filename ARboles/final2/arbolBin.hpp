@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <list>
 #include <queue>
 #include "nodoArbolBin.hpp"
 
@@ -31,6 +32,7 @@ private:
    void INSERTAR(NodoBin<tipo>* nod, tipo* elem);
    void INSERTAR_SUBARBOL(NodoBin<tipo>* nod, ArbolBin<tipo>& subarbol);
    NodoBin<tipo>* LEER_IN_PRE(vector<tipo>& inOrden, vector<tipo>& preOrden);
+   NodoBin<tipo>* BUILD_FROM_POST_IN_RECURSIVE(list<tipo>& postOrderList, list<tipo>& inOrderList);
    void CAMINO_RAIZ_NODO(NodoBin<tipo>* raiz, vector<tipo>& L, tipo& nodo, bool& encontrado);
    void DIAMETRO(NodoBin<tipo>* raiz, vector<tipo>& L, vector<tipo>& cam1, vector<tipo>& cam2, vector<tipo>& diametro);
    void FUNCION_MAGICA(vector<tipo>& L, vector<tipo>& cam1, vector<tipo>& cam2, vector<tipo>& diametro);
@@ -45,6 +47,7 @@ public:
 	ArbolBin(NodoBin<tipo>& raiz);
 	~ArbolBin();
 	void crearEnPre(vector<tipo> inOrden, vector<tipo> preOrden);
+	void crearEnPost(vector<tipo> postOrden, vector<tipo> inOrden);
 	NodoBin<tipo>* getRaiz();
 	int getPeso();
 	vector<ArbolBin<tipo> > hijos();
@@ -116,6 +119,12 @@ ArbolBin<tipo> :: ~ArbolBin(){
 }
 
 template <class tipo>
+int ArbolBin<tipo>::COUNT_NODES(const NodoBin<tipo>* node) const {
+    if (node == NULL) return 0;
+    return 1 + COUNT_NODES(node->getLeft()) + COUNT_NODES(node->getRight());
+}
+
+template <class tipo>
 NodoBin<tipo>* ArbolBin<tipo> :: LEER_IN_PRE(vector<tipo>& inOrden, vector<tipo>& preOrden){
 	tipo elem;
 	vector<tipo> inOrdenIzq; vector<tipo> preOrdenIzq;
@@ -146,10 +155,38 @@ NodoBin<tipo>* ArbolBin<tipo> :: LEER_IN_PRE(vector<tipo>& inOrden, vector<tipo>
 	return new NodoBin<tipo>(elem, LEER_IN_PRE(inOrdenIzq, preOrdenIzq), LEER_IN_PRE(inOrdenDer, preOrdenDer));
 }
 
+template <class tipo>
+NodoBin<tipo>* ArbolBin<tipo>::BUILD_FROM_POST_IN_RECURSIVE(list<tipo>& postOrderList, list<tipo>& inOrderList) {
+    if (postOrderList.empty() || inOrderList.empty()) return NULL;
+    tipo rootInfo = postOrderList.back();
+    postOrderList.pop_back();
+    NodoBin<tipo>* newNode = new NodoBin<tipo>(rootInfo);
+    list<tipo> leftInOrder, rightInOrder, leftPostOrder, rightPostOrder;
+    typename list<tipo>::iterator it = inOrderList.begin();
+    while (it != inOrderList.end() && *it != rootInfo) leftInOrder.push_back(*it++);
+    if (it != inOrderList.end()) it++;
+    while (it != inOrderList.end()) rightInOrder.push_back(*it++);
+    int leftSize = leftInOrder.size();
+    typename list<tipo>::iterator postIt = postOrderList.begin();
+    for(int i = 0; i < leftSize && postIt != postOrderList.end(); ++i) leftPostOrder.push_back(*postIt++);
+    while(postIt != postOrderList.end()) rightPostOrder.push_back(*postIt++);
+    newNode->setRight(BUILD_FROM_POST_IN_RECURSIVE(rightPostOrder, rightInOrder));
+    newNode->setLeft(BUILD_FROM_POST_IN_RECURSIVE(leftPostOrder, leftInOrder));
+    return newNode;
+}
+
 template<class tipo>
 void ArbolBin<tipo> :: crearEnPre(vector<tipo> inOrden, vector<tipo> preOrden){
 	this->raiz = LEER_IN_PRE(inOrden, preOrden);
 }
+
+template <class tipo>
+void ArbolBin<tipo>::crearEnPost(vector<tipo> postOrderList, vector<tipo> inOrderList) {
+      if (postOrderList.size() != inOrderList.size()) throw runtime_error("Mismatched list sizes in buildFromPostIn");
+    this->raiz = BUILD_FROM_POST_IN_RECURSIVE(postOrderList, inOrderList);
+    this->peso = COUNT_NODES(this->raiz);
+}
+
 
 template<class tipo>
 vector<ArbolBin<tipo> > ArbolBin<tipo> :: hijos(){
@@ -317,7 +354,7 @@ NodoBin<tipo>* ArbolBin<tipo> :: BUSCAR_NODO(NodoBin<tipo>* nod, tipo* elem){
 			if(*elem > nod->getElem()){
 				return BUSCAR_NODO(nod->getHijoDer(), elem);
 			}else{
-				return BUSCAR_NODO(nod->getHijoIzq(), elem);
+				return BUSCAR_NODO(nod->getHijoIzq(), elem); 
 			}
 		}
 	}

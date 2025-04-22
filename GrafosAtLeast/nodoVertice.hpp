@@ -1,92 +1,121 @@
-#ifndef grafo_nodo_vertice
-#define grafo_nodo_vertice
+#ifndef GRAFO_NODO_VERTICE_HPP
+#define GRAFO_NODO_VERTICE_HPP
 
-#include <iostream>
-
-using namespace std;
+#include "nodoArco.hpp"
 
 template <class elem> class grafo;
 
 template <class elem> 
-class nodoVertice{
+class nodoVertice {
 	private:
 		elem info;
 		nodoVertice<elem>* prox;
 		nodoArco<elem>* adyacentes;
-	protected:	
+	
 	public:
+		// Constructores
 		nodoVertice();
-		nodoVertice(elem dato);
+		nodoVertice(const elem& dato);
 		nodoVertice(nodoArco<elem>* ady);
 		nodoVertice(elem dato, nodoArco<elem>* ady);
 		nodoVertice(nodoVertice<elem>* proximo, nodoArco<elem>* ady);
 		nodoVertice(elem dato, nodoVertice<elem>* proximo, nodoArco<elem>* ady);
-		void setInfo(elem inf);
-		void setProx(nodoVertice<elem>* proxima);
+		// Setters
+		void setInfo(const elem& inf); 
+		void setProx(nodoVertice<elem>* proximo);
 		void setArcos(nodoArco<elem>* arco);
-		elem getInfo();
-		nodoVertice<elem>* getProx();
-		nodoArco<elem>* getArcos();	
+
+		// Getters
+		elem getInfo() const; 
+		elem& getInfoRef(); 
+		nodoVertice<elem>* getProx() const; 
+		nodoArco<elem>* getArcos() const; 
+		nodoArco<elem>*& getArcosRef();
 };
 
-nodoVertice(){
-	info = 0;
-	prox = 0;
-	adyacentes = 0;
+// --- Implementaciones ---
+// (Necesarias en el .hpp para templates, fuera de la clase)
+
+
+template <class elem>
+nodoVertice<elem>::nodoVertice() {
+    prox = 0;
+    adyacentes = 0;
 }
 
-nodoVertice(elem dato){
-	info = dato;
-	prox = 0;
-	adyacentes = 0;
+template <class elem>
+nodoVertice<elem>::nodoVertice(const elem& dato) {
+    info = dato; // Asume que elem tiene operador de asignación o constructor de copia
+    prox = 0;
+    adyacentes = 0;
 }
 
-nodoVertice(nodoArco<elem>* ady){
+template <class elem>
+nodoVertice<elem>::nodoVertice(nodoArco<elem>* ady) {
 	info = 0;
 	prox = 0;
 	adyacentes = ady;
 }
 
-nodoVertice(elem dato, nodoArco<elem>* ady){
+template <class elem>
+nodoVertice<elem>::nodoVertice(elem dato, nodoArco<elem>* ady) {
 	info=dato;
 	prox=0;
 	adyacentes = ady;
 }
 
-nodoVertice(nodoVertice<elem>* proximo, nodoArco<elem>* ady){
+template <class elem>
+nodoVertice<elem>::nodoVertice(nodoVertice<elem>* proximo, nodoArco<elem>* ady) {
 	info = 0;
 	prox = proximo;
 	adyacentes = ady;
 }
 
-nodoVertice(elem dato, nodoVertice<elem>* proximo, nodoArco<elem>* ady){
+template <class elem>
+nodoVertice<elem>::nodoVertice(elem dato, nodoVertice<elem>* proximo, nodoArco<elem>* ady) {
 	info = dato;
 	prox = proximo;
 	adyacentes = ady;
 }
 
-void setInfo(elem inf){
-	info = inf;
+template <class elem>
+void nodoVertice<elem>::setInfo(const elem& inf) {
+    info = inf;
 }
 
-void setProx(nodoVertice<elem>* proxima){
-	prox = proxima
+template <class elem>
+void nodoVertice<elem>::setProx(nodoVertice<elem>* proximo) {
+    prox = proximo;
 }
 
-void setArcos(nodoArco<elem>* arco){
-	adyacentes = arco;
+template <class elem>
+void nodoVertice<elem>::setArcos(nodoArco<elem>* arco) {
+    adyacentes = arco;
 }
 
-elem getInfo(){
-	return info;
+template <class elem>
+elem nodoVertice<elem>::getInfo() const {
+    return info;
 }
 
-nodoVertice<elem>* getProx(){
-	return prox;
+template <class elem>
+elem& nodoVertice<elem>::getInfoRef() {
+    return info;
 }
 
-nodoArco<elem>* getArcos(){
-	return adyacentes;
+template <class elem>
+nodoVertice<elem>* nodoVertice<elem>::getProx() const {
+    return prox;
 }
 
-#endif
+template <class elem>
+nodoArco<elem>* nodoVertice<elem>::getArcos() const {
+    return adyacentes;
+}
+
+template <class elem>
+nodoArco<elem>*& nodoVertice<elem>::getArcosRef() {
+    return adyacentes;
+}
+
+#endif // GRAFO_NODO_VERTICE_HPP
