@@ -87,7 +87,7 @@ public:
     // --- Getters ---
     nodoVertice<elem>* getPrimero() const;
     int getNroVertices() const;
-    int getNroArco() const; // Devuelve el número de Arco no dirigidas
+    int getNroArcos() const; // Devuelve el número de Arco no dirigidas
     int getNroArcosInternos() const; // Devuelve el número de arcos dirigidos almacenados
     std::vector<elem> getVertices() const;
 
