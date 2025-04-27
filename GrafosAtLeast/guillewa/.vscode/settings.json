@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "iostream": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "format": "cpp",
+        "xstring": "cpp",
+        "xhash": "cpp"
+    }
+}
