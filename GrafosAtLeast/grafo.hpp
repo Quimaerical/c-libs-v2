@@ -60,8 +60,10 @@ class grafo {
 		// Modificadores del Grafo
 		bool insertarVertice(const elem& info);
 		bool insertarArco(const elem& vInfo, const elem& wInfo, float peso = 0.0f); // Peso opcional
-		bool eliminarVertice(const elem& info);
+		bool insertarArcoNoDirigido(const elem& vInfo, const elem& wInfo, float peso = 0.0f);
+        bool eliminarVertice(const elem& info);
 		bool eliminarArco(const elem& vInfo, const elem& wInfo);
+        bool eliminarArcoNoDirigido(const elem& vInfo, const elem& wInfo);
 
 		// Consultas sobre Arcos
 		nodoArco<elem>* existeArco(const elem& vInfo, const elem& wInfo) const;
@@ -201,6 +203,42 @@ bool grafo<elem>::insertarArco(const elem& vInfo, const elem& wInfo, float peso)
 }
 
 template <class elem>
+bool grafo<elem>::insertarArcoNoDirigido(const elem& vInfo, const elem& wInfo, float peso) {
+    // 1. Buscar los vértices origen y destino
+    nodoVertice<elem>* v = buscarVertice(vInfo);
+    nodoVertice<elem>* w = buscarVertice(wInfo);
+
+    // 2. Verificar que ambos vértices existen
+    if (v == 0 || w == 0) {  
+        return false; // Uno o ambos vértices no existen
+    }
+
+    // 3. Verificar si el arco ya existe (para no duplicarlo)
+    if (buscarArco(v, w) != 0) { 
+        return false; // El arco ya existe
+    }
+    if (buscarArco(w, v) != 0) { 
+        return false; // El arco ya existe
+    }
+
+    // 4. Crear los dos nuevos nodos arcos
+    nodoArco<elem>* nuevoArcoV = new nodoArco<elem>(w, peso); // El arco apunta a 'w
+    nodoArco<elem>* nuevoArcoW = new nodoArco<elem>(v, peso); // El arco apunta a 'v
+
+    // 5. Insertar los arcos en las listas de adyacencia de 'v' y '
+    nuevoArcoV->setSiguiente(v->getArcos());
+    // v->setArcos(nuevoArcoV);
+    v->getArcosRef() = nuevoArcoV;
+
+    nuevoArcoW->setSiguiente(w->getArcos());
+    // w->setArcos(nuevoArcoW);
+    w->getArcosRef() = nuevoArcoW;
+
+    nArcos += 2;
+    return true;
+}
+
+template <class elem>
 bool grafo<elem>::eliminarVertice(const elem& info) {
     nodoVertice<elem>* verticeAEliminar = 0;  
     nodoVertice<elem>* verticeAnterior = 0;  
@@ -304,6 +342,29 @@ bool grafo<elem>::eliminarArco(const elem& vInfo, const elem& wInfo) {
     nArcos--;
     return true;
 }
+
+template <class elem>
+bool grafo<elem>::eliminarArcoNoDirigido(const elem& vInfo, const elem& wInfo) {
+    nodoVertice<elem>* v = buscarVertice(vInfo);
+    nodoVertice<elem>* w = buscarVertice(wInfo); // Necesario para comparar punteros
+
+    if (v == 0 || w == 0) {  
+        return false; // Vértices no existen
+    }
+    
+    // Eliminar el arco v->w
+    if (!eliminarArco(vInfo, wInfo)) {
+        return false; // Arco no encontrado o error
+    }
+    // Eliminar el arco w->v
+    if (!eliminarArco(wInfo, vInfo)) {
+        // Si no se pudo eliminar el arco w->v, se deshace la eliminación de v->w
+        insertarArco(vInfo, wInfo);
+        return false; // Arco no encontrado o error
+    }
+    return true;
+}
+
 
 template <class elem>
 nodoArco<elem>* grafo<elem>::existeArco(const elem& vInfo, const elem& wInfo) const {

@@ -1,0 +1,16 @@
+2 
+Valencia Washington 
+Caracas Dallas 
+Washington Caracas 
+Caracas Washington 
+Dallas Valencia 
+Dallas Washington 
+Guinea Frankfurt 
+Oregon Valencia 
+Dallas Oregon 
+Dallas Frankfurt 
+Dallas Guinea 
+Oregon Frankfurt 
+Oregon Caracas 
+Valencia Dallas 
+Dallas Frankfurt 
