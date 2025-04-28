@@ -258,13 +258,13 @@ int main() {
     vector<string> resultDominatingSet;
 
     // Decide qué algoritmo usar basado en el tamaño del grafo
-    if (numVertices <= 20) { // Umbral ajustado para Branch and Bound
-        cout << "# Using Branch and Bound Algorithm" << endl;
+    // if (numVertices <= 20) { // Umbral ajustado para Branch and Bound
+        // cout << "# Using Branch and Bound Algorithm" << endl;
         resultDominatingSet = findMDS_BranchAndBound(cityGraph);
-    } else {
-        cout << "# Using Greedy Algorithm" << endl;
-        resultDominatingSet = findMinDominatingSet_Greedy(cityGraph);
-    }
+    // } else {
+    //     cout << "# Using Greedy Algorithm" << endl;
+    //     resultDominatingSet = findMinDominatingSet_Greedy(cityGraph);
+    // }
 
 
     // Imprimir resultados
@@ -276,10 +276,10 @@ int main() {
             cout << resultDominatingSet[i];
         }
         cout << endl;
-        cout << "Tamaño del conjunto dominante mínimo: " << resultDominatingSet.size() << endl;
+        // cout << "Tamaño del conjunto dominante mínimo: " << resultDominatingSet.size() << endl;
     } else if (numVertices == 0) {
-         cout << "Grafo vacío." << endl;
-         cout << "Tamaño del conjunto dominante mínimo: 0" << endl;
+        cout << "Grafo vacío." << endl;
+        cout << "Tamaño del conjunto dominante mínimo: 0" << endl;
     }
 
 
