@@ -1,7 +1,7 @@
 TARGET = grafos
 LIBS = -lm
 CC = g++
-CFLAGS = -std=c++98 -g
+CFLAGS = -Wall -g
 
 .PHONY: default all clean
 

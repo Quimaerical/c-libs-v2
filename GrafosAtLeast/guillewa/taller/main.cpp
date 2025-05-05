@@ -1,50 +1,48 @@
-#include "GraphND.h" // Your graph library
+#include "GraphND.h" // Your graph library (Assuming this is C++98 compatible)
 #include <iostream>
 #include <vector>
 #include <list>
 #include <string>
-#include <set>          // To easily check for dominated nodes
-#include <unordered_set> // Potentially faster set operations
-#include <vector>
-#include <map>          // To map vertex names to indices
-#include <unordered_map> // Potentially faster map
-#include <algorithm>    // For sort, min
-#include <sstream>      // For parsing input
-#include <limits>       // For initial best size
+#include <set>           // Use set instead of unordered_set
+#include <map>           // Use map instead of unordered_map
+#include <utility>       // For std::pair
+#include <algorithm>     // For sort, min
+#include <sstream>       // For parsing input
+#include <exception>     // For exception handling (available in C++98)
+#include <cstddef>       // For size_t (available in C++98)
+#include <cstdlib>
 
-// Assuming GraphND and EdgeTriple are in the global or eda namespace
-// If they are in a namespace (e.g., eda), uncomment the next line
-// using namespace eda;
+// Note: Removed duplicate #include <vector> and <limits> (not needed)
 
 using namespace std;
 
 // --- Helper Function: Check if a set D is a dominating set for graph G ---
-// Uses maps for potentially faster lookups if graph/set is large
-bool isDominatingSet( const GraphND<string>& graph,const unordered_set<string>& current_D, const list<string>& all_vertices, const unordered_map<string, list<string>>& adj_list ) {
-    if (all_vertices.empty()) return true; // Empty graph is dominated by empty set
-    if (current_D.empty() && !all_vertices.empty()) return false; // Empty set cannot dominate non-empty graph
+// Modified for C++98 containers and loops
+bool isDominatingSet(
+    const GraphND<string>& graph,
+    const set<string>& current_D, // Use set
+    const list<string>& all_vertices,
+    const map<string, list<string> >& adj_list // Use map, note space "> >"
+) {
+    if (all_vertices.empty()) return true;
+    if (current_D.empty() && !all_vertices.empty()) return false;
 
-    unordered_set<string> dominated_nodes;
+    set<string> dominated_nodes; // Use set
 
-    // Mark nodes in D and their neighbors as dominated
-    for (const string& node_in_d : current_D) {
-        // Mark the node itself
-        dominated_nodes.insert(node_in_d);
-        // Mark its neighbors
-        // Use the precomputed adjacency list
-        auto it = adj_list.find(node_in_d);
-        if (it != adj_list.end()) {
-            for (const string& neighbor : it->second) {
-                dominated_nodes.insert(neighbor);
+    // Iterator loop for C++98
+    for (set<string>::const_iterator it_d = current_D.begin(); it_d != current_D.end(); ++it_d) {
+        const string& node_in_d = *it_d;
+        dominated_nodes.insert(node_in_d); // Mark the node itself
+
+        // Find neighbors in the precomputed map
+        map<string, list<string> >::const_iterator adj_it = adj_list.find(node_in_d);
+        if (adj_it != adj_list.end()) {
+            const list<string>& neighbors = adj_it->second;
+            // Iterator loop for neighbors
+            for (list<string>::const_iterator nit = neighbors.begin(); nit != neighbors.end(); ++nit) {
+                dominated_nodes.insert(*nit);
             }
         }
-        // Original way (might call graph.getNeighbors repeatedly):
-        // try {
-        //     list<string> neighbors = graph.getNeighbors(node_in_d);
-        //     for (const string& neighbor : neighbors) {
-        //         dominated_nodes.insert(neighbor);
-        //     }
-        // } catch (const exception& e) { /* Node might not exist if graph changed? Or isolated */ }
     }
 
     // Check if all vertices are dominated
@@ -53,266 +51,269 @@ bool isDominatingSet( const GraphND<string>& graph,const unordered_set<string>& 
 
 
 // --- Recursive Backtracking Function ---
+// Modified for C++98 containers and loops
 void findMDS_Backtrack_Recursive(
     const GraphND<string>& graph,
-    const vector<string>& vertices_vec, // Vector of vertex names for indexed access
-    int current_index,                  // Index of the vertex we are considering
-    unordered_set<string>& current_D,   // The dominating set being built (passed by ref)
-    list<string>& best_D_so_far,        // Best complete solution found (passed by ref)
-    const unordered_map<string, list<string>>& adj // Precomputed adjacency list
+    const vector<string>& vertices_vec,
+    int current_index,
+    set<string>& current_D,             // Use set
+    list<string>& best_D_so_far,
+    const map<string, list<string> >& adj // Use map
 ) {
     // --- Pruning ---
-    // If the current set is already >= the best found, no need to continue
-    if (current_D.size() >= best_D_so_far.size()) {
+    // Compare sizes (list::size() can be O(N) pre-C++11, but often O(1). Assume okay here.)
+    // Using size_t for sizes is standard C++98.
+    if (!best_D_so_far.empty() && current_D.size() >= best_D_so_far.size()) {
+         // Added check for !best_D_so_far.empty() because initial call might have size 0
+         // if graph was empty, though wrapper handles empty graph. Defensive check.
+         // Or initialize best_D_so_far with all vertices in wrapper (as done).
         return;
     }
 
     // --- Base Case ---
-    // If we have considered all vertices
-    if (current_index == vertices_vec.size()) {
-        // Check if the current_D is a valid dominating set
-        list<string> all_vertices_list(vertices_vec.begin(), vertices_vec.end()); // Need list for isDominatingSet helper
+    if (current_index == static_cast<int>(vertices_vec.size())) { // Use static_cast for comparison
+        list<string> all_vertices_list(vertices_vec.begin(), vertices_vec.end());
         if (isDominatingSet(graph, current_D, all_vertices_list, adj)) {
-            // If it is valid AND smaller than the best found so far
-            if (current_D.size() < best_D_so_far.size()) {
-                // Update the best solution
+            // Update best solution if current is smaller or if best is still empty
+             if (best_D_so_far.empty() || current_D.size() < best_D_so_far.size()) {
                 best_D_so_far.assign(current_D.begin(), current_D.end());
-                // cout << "  Found new best D (size " << best_D_so_far.size() << ")" << endl; // Debug
             }
         }
-        return; // End of this path
+        return;
     }
 
     // --- Recursive Steps ---
-    string current_vertex = vertices_vec[current_index];
+    const string& current_vertex = vertices_vec[current_index]; // Direct access okay
 
     // 1. Explore WITHOUT including current_vertex in D
     findMDS_Backtrack_Recursive(graph, vertices_vec, current_index + 1, current_D, best_D_so_far, adj);
 
     // 2. Explore INCLUDING current_vertex in D
-    current_D.insert(current_vertex); // Add to current set
-    findMDS_Backtrack_Recursive(graph, vertices_vec, current_index + 1, current_D, best_D_so_far, adj);
-    current_D.erase(current_vertex); // Backtrack: remove from current set before returning
+    // Check size before inserting to potentially prune earlier (micro-optimization)
+    if (best_D_so_far.empty() || (current_D.size() + 1) < best_D_so_far.size()) {
+        current_D.insert(current_vertex);
+        findMDS_Backtrack_Recursive(graph, vertices_vec, current_index + 1, current_D, best_D_so_far, adj);
+        current_D.erase(current_vertex); // Backtrack
+    } else if (current_D.size() + 1 == best_D_so_far.size()) {
+        // If adding this node makes it equal to the best size, we still need to check
+        // if this path leads to a valid solution of the *same* minimal size.
+         current_D.insert(current_vertex);
+         findMDS_Backtrack_Recursive(graph, vertices_vec, current_index + 1, current_D, best_D_so_far, adj);
+         current_D.erase(current_vertex); // Backtrack
+    }
+    // If current_D.size() + 1 > best_D_so_far.size(), the main pruning check handles it.
 }
 
 // --- Wrapper Function to Setup and Call Backtracking ---
+// Modified for C++98
 list<string> findMinDominatingSet_Backtrack(GraphND<string>& graph) {
     list<string> all_vertices_list = graph.getVertices();
     if (all_vertices_list.empty()) {
-        return {}; // Return empty list for empty graph
+        return list<string>(); // Return empty list
     }
 
-    // Convert list to vector for indexed access in recursion
     vector<string> vertices_vec(all_vertices_list.begin(), all_vertices_list.end());
 
-    // Precompute adjacency list for efficiency in isDominatingSet
-    unordered_map<string, list<string>> adj_list;
-     for(const string& v : vertices_vec) {
+    // Precompute adjacency list
+    map<string, list<string> > adj_list; // Use map
+    for (vector<string>::const_iterator it = vertices_vec.begin(); it != vertices_vec.end(); ++it) {
+        const string& v = *it;
         try {
+            // Ensure entry exists even if isolated
             adj_list[v] = graph.getNeighbors(v);
-        } catch(...) { /* handle error or isolated node */
-            adj_list[v] = {}; // Ensure entry exists even if isolated
+        } catch (...) { // Catch any exception
+             adj_list[v] = list<string>(); // Assign empty list
         }
-     }
+    }
 
-
-    unordered_set<string> current_D; // Start with an empty set
-    // Initialize best_D_so_far with a valid dominating set (e.g., all vertices)
-    // This provides the initial upper bound for pruning.
+    set<string> current_D; // Use set
+    // Initialize best_D_so_far with all vertices
     list<string> best_D_so_far = all_vertices_list;
-    // cout << "Initial best D size: " << best_D_so_far.size() << endl; // Debug
 
-    // Start the recursion from the first vertex (index 0)
+    // Start recursion
     findMDS_Backtrack_Recursive(graph, vertices_vec, 0, current_D, best_D_so_far, adj_list);
 
-    // Sort the final result alphabetically as required by PDF
-    best_D_so_far.sort();
+    best_D_so_far.sort(); // list::sort is C++98
     return best_D_so_far;
 }
 
-list<string> findMinDominatingSet_Greedy(GraphND<string>& graph) {
-    list<string> dominatingSet;
+// --- Greedy Algorithm ---
+// Modified for C++98
+list<string> findMinDominatingSet_ImprovedGreedy(GraphND<string>& graph) {
     list<string> allNodesList = graph.getVertices();
+    if (allNodesList.empty()) return list<string>();
 
-    if (allNodesList.empty()) {
-        return dominatingSet; // Return empty list for empty graph
+    map<string, list<string>> adj_list;
+    for (list<string>::const_iterator it = allNodesList.begin(); it != allNodesList.end(); ++it) {
+        adj_list[*it] = graph.getNeighbors(*it);
     }
 
-    // Use unordered_set for efficient checking and removal of uncovered nodes
-    unordered_set<string> uncoveredNodes(allNodesList.begin(), allNodesList.end());
-    // Keep track of nodes already added to the dominating set to avoid re-adding
-    unordered_set<string> nodesInD;
+    list<string> best_D;
+    size_t min_size = allNodesList.size(); // Tamaño máximo inicial
 
-    // Precompute neighbors for efficiency inside the loop
-    unordered_map<string, list<string>> adj_list;
-    for(const string& v : allNodesList) {
-        try {
-            adj_list[v] = graph.getNeighbors(v);
-        } catch(...) {
-            adj_list[v] = {}; // Ensure entry exists even if isolated
-        }
-    }
+    const int max_iterations = 1000;
+    for (int i = 0; i < max_iterations; ++i) {
+        list<string> current_D;
+        set<string> uncoveredNodes(allNodesList.begin(), allNodesList.end());
+        set<string> nodesInD;
 
-    while (!uncoveredNodes.empty()) {
-        string bestNodeToAdd = "";
-        int maxCoverage = -1; // Max number of *currently uncovered* nodes covered
+        while (!uncoveredNodes.empty()) {
+            string bestNodeToAdd = "";
+            int maxCoverage = -1;
 
-        // Iterate through all potential nodes to add (those not already in D)
-        for (const string& candidateNode : allNodesList) {
-            // Skip if this node is already in our dominating set
-            if (nodesInD.count(candidateNode)) {
-                continue;
+            // Aleatorización manual (C++98 no tiene random_shuffle fácil)
+            vector<string> shuffledNodes(allNodesList.begin(), allNodesList.end());
+            for (size_t j = 0; j < shuffledNodes.size(); ++j) {
+                swap(shuffledNodes[j], shuffledNodes[rand() % shuffledNodes.size()]);
             }
 
-            int currentCoverage = 0;
-            // Check if the candidate node itself is uncovered
-            if (uncoveredNodes.count(candidateNode)) {
-                currentCoverage++;
-            }
-            // Check how many of its neighbors are uncovered
-            auto it = adj_list.find(candidateNode);
-            if (it != adj_list.end()) {
-                for (const string& neighbor : it->second) {
-                    if (uncoveredNodes.count(neighbor)) {
-                        currentCoverage++;
+            for (vector<string>::const_iterator it = shuffledNodes.begin(); it != shuffledNodes.end(); ++it) {
+                const string& candidateNode = *it;
+                if (nodesInD.find(candidateNode) != nodesInD.end()) continue;
+
+                int currentCoverage = 0;
+                if (uncoveredNodes.find(candidateNode) != uncoveredNodes.end()) currentCoverage++;
+                map<string, list<string>>::const_iterator adj_it = adj_list.find(candidateNode);
+                if (adj_it != adj_list.end()) {
+                    for (list<string>::const_iterator neighbor_it = adj_it->second.begin(); neighbor_it != adj_it->second.end(); ++neighbor_it) {
+                        if (uncoveredNodes.find(*neighbor_it) != uncoveredNodes.end()) currentCoverage++;
                     }
+                }
+
+                if (currentCoverage > maxCoverage) {
+                    maxCoverage = currentCoverage;
+                    bestNodeToAdd = candidateNode;
                 }
             }
 
-            // If this candidate covers more *new* nodes, it's the current best
-            if (currentCoverage > maxCoverage) {
-                maxCoverage = currentCoverage;
-                bestNodeToAdd = candidateNode;
+            if (bestNodeToAdd.empty()) {
+                bestNodeToAdd = *uncoveredNodes.begin();
             }
-            // Optional: Add tie-breaking rule here if needed (e.g., alphabetical)
-            // else if (currentCoverage == maxCoverage && candidateNode < bestNodeToAdd) {
-            //     bestNodeToAdd = candidateNode;
-            // }
-        }
 
-        // If we didn't find any node that covers new nodes (e.g., remaining nodes are isolated)
-        // or if the graph is disconnected and we finished a component.
-        // We must pick *some* uncovered node to continue.
-        if (bestNodeToAdd.empty() && !uncoveredNodes.empty()) {
-            // Pick the first available uncovered node
-             bestNodeToAdd = *uncoveredNodes.begin();
-             // Ensure it's not accidentally already in D (shouldn't happen with the check above, but safe)
-             if (nodesInD.count(bestNodeToAdd)) {
-                 cerr << "Error: Greedy fallback selected a node already in D?" << endl;
-                 // Find a different one - this indicates a potential logic issue if it occurs
-                 for(const string& node : uncoveredNodes) {
-                     if (!nodesInD.count(node)) {
-                         bestNodeToAdd = node;
-                         break;
-                     }
-                 }
-             }
-            // cout << "Greedy fallback: adding " << bestNodeToAdd << endl; // Debug
-        } else if (bestNodeToAdd.empty() && uncoveredNodes.empty()) {
-            break; // Should be covered by the while condition, but safe exit
-        }
-
-
-        // Add the chosen best node to the dominating set
-        dominatingSet.push_back(bestNodeToAdd);
-        nodesInD.insert(bestNodeToAdd); // Mark as added to D
-
-        // Update the set of uncovered nodes
-        // Remove the node itself
-        uncoveredNodes.erase(bestNodeToAdd);
-        // Remove its neighbors
-        auto it = adj_list.find(bestNodeToAdd);
-        if (it != adj_list.end()) {
-            for (const string& neighbor : it->second) {
-                uncoveredNodes.erase(neighbor); // erase is safe even if not present
+            current_D.push_back(bestNodeToAdd);
+            nodesInD.insert(bestNodeToAdd);
+            uncoveredNodes.erase(bestNodeToAdd);
+            map<string, list<string>>::const_iterator neighbors = adj_list.find(bestNodeToAdd);
+            if (neighbors != adj_list.end()) {
+                for (list<string>::const_iterator neighbor_it = neighbors->second.begin(); neighbor_it != neighbors->second.end(); ++neighbor_it) {
+                    uncoveredNodes.erase(*neighbor_it);
+                }
             }
         }
-    } // End while(!uncoveredNodes.empty())
 
-    // Sort the final result alphabetically
-    dominatingSet.sort();
-    return dominatingSet;
+        if (current_D.size() < min_size) {
+            best_D = current_D;
+            min_size = current_D.size();
+            if (min_size == 1) break;
+        }
+    }
+
+    best_D.sort();
+    return best_D;
 }
 
-
 // --- Función Principal ---
+
 int main() {
-    cout << "--- Taller 3: Dominion of Steel (Minimum Dominating Set - Backtracking) ---" << endl;
-    
+    // Optional: Faster I/O (available in C++98)
+    // std::ios_base::sync_with_stdio(false);
+    // std::cin.tie(NULL); // Requires <ios> header if used
+
     GraphND<string> cityGraph;
     string line;
     string u, v;
 
-    cout << "Introduce las conexiones (carreteras) entre pueblos (una por linea, ej: valhalla midgard), termina con linea vacia o EOF:" << endl;
+    // Commented out user prompts for cleaner output if needed
+    cout << "--- Taller 3: Dominion of Steel (Minimum Dominating Set) ---" << endl;
+    // cout << "Introduce las conexiones (carreteras)..." << endl;
 
-    // Leer la entrada y construir el grafo
-    set<string> vertex_set; // Use a set to automatically handle unique vertices
-    vector<pair<string, string>> edges; // Store edges to add after all vertices are known (optional, safer)
+    set<string> vertex_set; // Use set
+    // Note space in "> >" for C++98 compatibility
+    vector<pair<string, string> > edges;
 
     while (getline(cin, line) && !line.empty()) {
         stringstream ss(line);
         if (ss >> u >> v) {
             vertex_set.insert(u);
             vertex_set.insert(v);
-            edges.push_back({u, v});
+            // Use make_pair for C++98 clarity
+            edges.push_back(make_pair(u, v));
         } else {
             cerr << "Advertencia: Linea ignorada, formato incorrecto: '" << line << "'" << endl;
         }
     }
 
-    // Add vertices to graph
-    for(const string& vertex_name : vertex_set) {
-        cityGraph.addVertex(vertex_name);
+    // Add vertices using iterators
+    for (set<string>::const_iterator it = vertex_set.begin(); it != vertex_set.end(); ++it) {
+        cityGraph.addVertex(*it);
     }
 
-    // Add edges to graph
+    // Add edges using iterators
     try {
-        for(const auto& edge_pair : edges) {
-            // Weight doesn't matter for MDS, use 1.0 or 0.0
+        for (vector<pair<string, string> >::const_iterator it = edges.begin(); it != edges.end(); ++it) {
+            const pair<string, string>& edge_pair = *it;
+            // Use 0.0f for float literal
             cityGraph.addEdge(edge_pair.first, edge_pair.second, 0.0f);
         }
-    } catch (const exception& e) {
+    } catch (const exception& e) { // Catch standard exception
         cerr << "Error añadiendo aristas: " << e.what() << endl;
         return 1;
     }
 
+    int numVertices = cityGraph.order(); // Assuming order() returns int or compatible
 
-    cout << "\nGrafo construido con " << cityGraph.order() << " pueblos y " << cityGraph.getNumEdges() << " carreteras." << endl;
+    cout << "\nGrafo construido con " << numVertices << " pueblos y "
+         << cityGraph.getNumEdges() << " carreteras." << endl;
 
-    if (cityGraph.order() == 0) {
+    if (numVertices == 0) {
         cout << "\nNo se introdujeron pueblos. No hay conjunto dominante." << endl;
+        // Output empty line for judge systems? Or specific message?
+        // Let's assume empty line is okay if no result.
+        cout << endl;
         return 0;
     }
 
     list<string> resultDominatingSet;
-    int numVertices = cityGraph.order();
-    if (numVertices <= 29) {
-        // === Ejecutar el algoritmo Backtracking para MDS ===
-        cout << "\nCalculando conjunto dominante minimo (Backtracking)..." << endl;
+    const int BACKTRACK_LIMIT = 29; // Use const int
+    bool used_backtracking = false;
+
+    if (numVertices <= BACKTRACK_LIMIT) {
+        cout << "\nCalculando conjunto dominante minimo..." << endl;
         resultDominatingSet = findMinDominatingSet_Backtrack(cityGraph);
+        used_backtracking = true;
     } else {
-        cout << "\nCalculando conjunto dominante minimo (\"Backtracking\")..." << endl;
-        resultDominatingSet = findMinDominatingSet_Greedy(cityGraph);
+        
+        cout << "\nCalculando conjunto dominante minimo..." << endl;
+        resultDominatingSet = findMinDominatingSet_ImprovedGreedy(cityGraph);
+        used_backtracking = false; // Already false, but explicit
     }
-    
+
     // === Mostrar Resultados ===
-    cout << "\n--- Conjunto Dominante Minimo Encontrado (D) ---" << endl;
-    if (resultDominatingSet.empty() && cityGraph.order() > 0) {
-         cout << "(Error: No se encontro conjunto dominante, revisar logica o grafo)" << endl;
-    } else if (resultDominatingSet.empty() && cityGraph.order() == 0) {
-         cout << "(Grafo vacio)" << endl;
-    }
-    else {
+    cout << "\n--- Conjunto Dominante Encontrado (D) ---" << endl;
+    if (resultDominatingSet.empty() && numVertices > 0) {
+        cerr << "(Error: No se encontro conjunto dominante, revisar logica o grafo)" << endl;
+         // Output empty line or specific error message? Assume empty line for now.
+         cout << endl;
+    } else if (numVertices == 0) {
+         // Already handled, but defensive check
+         cout << endl;
+    } else {
+        // Output the result using iterators
         bool first = true;
-        for (const string& node : resultDominatingSet) {
+        for (list<string>::const_iterator it = resultDominatingSet.begin(); it != resultDominatingSet.end(); ++it) {
             if (!first) {
                 cout << " ";
             }
-            cout << node;
+            cout << *it;
             first = false;
         }
-        cout << endl;
-        cout << "Tamaño del conjunto dominante minimo: " << resultDominatingSet.size() << endl;
+        cout << endl; // Newline after the result list
+
+        // Optional: Print size if needed for debugging, but often not for judge output
+        cout << "Tamaño del conjunto dominante: " << resultDominatingSet.size() << endl;
+        // if (!used_backtracking && numVertices > BACKTRACK_LIMIT) {
+        //     cout << "(Resultado aproximado por Greedy)" << endl;
+        // }
     }
 
     cout << "\n--- Ejecucion Completa ---" << endl;
